@@ -36,10 +36,14 @@ public class CutsceneController : MonoBehaviour
 
     private void Update()
     {
-        // Listen for skip inputs
-        if (!isTransitioning && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Escape)))
+        // Listen for skip inputs using the new Input System
+        if (!isTransitioning)
         {
-            TransitionToNextScene();
+            var keyboard = UnityEngine.InputSystem.Keyboard.current;
+            if (keyboard != null && (keyboard.spaceKey.wasPressedThisFrame || keyboard.escapeKey.wasPressedThisFrame))
+            {
+                TransitionToNextScene();
+            }
         }
     }
 
