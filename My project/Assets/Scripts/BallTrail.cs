@@ -13,6 +13,7 @@ public class BallTrail : MonoBehaviour
     [SerializeField] private float trailStartWidth = 0.12f;
     [SerializeField] private float trailEndWidth = 0f;
     [SerializeField] private Color trailColor = new Color(1f, 1f, 1f, 0.7f);
+    [SerializeField] private Material trailMaterial;
 
     private TrailRenderer trailRenderer;
     private Rigidbody rb;
@@ -47,10 +48,17 @@ public class BallTrail : MonoBehaviour
         trailRenderer.allowOcclusionWhenDynamic = false;
 
         // Use an unlit material for consistent trail appearance
-        Material trailMat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-        if (trailMat == null)
+        Material trailMat = null;
+        if (trailMaterial != null)
         {
-            trailMat = new Material(Shader.Find("Unlit/Color"));
+            trailMat = new Material(trailMaterial);
+        }
+        else
+        {
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null) shader = Shader.Find("Unlit/Color");
+            if (shader == null) shader = Shader.Find("Standard");
+            trailMat = new Material(shader != null ? shader : Shader.Find("Hidden/InternalErrorShader"));
         }
         trailMat.color = trailColor;
         trailRenderer.material = trailMat;

@@ -27,6 +27,9 @@ public class CourtMarkings : MonoBehaviour
     [SerializeField] private GameObject pitchFloor;
     [SerializeField] private GameObject leftGoal;
     [SerializeField] private GameObject rightGoal;
+    [SerializeField] private Material pitchMaterial;
+    [SerializeField] private Material goalMaterial;
+    [SerializeField] private Material lineMaterialAsset;
 
     private Material lineMaterial;
 
@@ -52,9 +55,17 @@ public class CourtMarkings : MonoBehaviour
             MeshRenderer mr = pitchFloor.GetComponent<MeshRenderer>();
             if (mr != null)
             {
-                Material pitchMat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-                if (pitchMat.shader == null || !pitchMat.shader.isSupported)
-                    pitchMat = new Material(Shader.Find("Standard"));
+                Material pitchMat = null;
+                if (pitchMaterial != null)
+                {
+                    pitchMat = new Material(pitchMaterial);
+                }
+                else
+                {
+                    Shader shader = Shader.Find("Universal Render Pipeline/Lit");
+                    if (shader == null) shader = Shader.Find("Standard");
+                    pitchMat = new Material(shader != null ? shader : Shader.Find("Hidden/InternalErrorShader"));
+                }
                 
                 pitchMat.color = new Color(0.15f, 0.45f, 0.2f); // Deep Futsal Green
                 pitchMat.SetFloat("_Smoothness", 0.7f); // Slightly reflective hardwood/synthetic feel
@@ -72,9 +83,17 @@ public class CourtMarkings : MonoBehaviour
         MeshRenderer mr = goal.GetComponent<MeshRenderer>();
         if (mr != null)
         {
-            Material goalMat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-            if (goalMat.shader == null || !goalMat.shader.isSupported)
-                goalMat = new Material(Shader.Find("Standard"));
+            Material goalMat = null;
+            if (goalMaterial != null)
+            {
+                goalMat = new Material(goalMaterial);
+            }
+            else
+            {
+                Shader shader = Shader.Find("Universal Render Pipeline/Lit");
+                if (shader == null) shader = Shader.Find("Standard");
+                goalMat = new Material(shader != null ? shader : Shader.Find("Hidden/InternalErrorShader"));
+            }
             
             // Give the goals a distinct color based on the team, or white
             goalMat.color = netColor; 
@@ -84,12 +103,16 @@ public class CourtMarkings : MonoBehaviour
 
     private void CreateLineMaterial()
     {
-        // Use an unlit material so markings look consistent regardless of lighting
-        lineMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-        if (lineMaterial == null)
+        if (lineMaterialAsset != null)
         {
-            // Fallback for non-URP
-            lineMaterial = new Material(Shader.Find("Unlit/Color"));
+            lineMaterial = new Material(lineMaterialAsset);
+        }
+        else
+        {
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null) shader = Shader.Find("Unlit/Color");
+            if (shader == null) shader = Shader.Find("Standard");
+            lineMaterial = new Material(shader != null ? shader : Shader.Find("Hidden/InternalErrorShader"));
         }
         lineMaterial.color = lineColor;
     }

@@ -12,6 +12,9 @@ public class ControlAssignment : MonoBehaviour
     [SerializeField] private float hysteresisMargin = 0.5f; // Reduced for snappier switching
     [SerializeField] private float autoSwitchInterval = 0.3f; // Faster checks
 
+    [Header("Visuals/Materials")]
+    [SerializeField] private Material highlightMaterial;
+
     private PlayerBase activePlayer;
     private Transform ballTransform;
     private float autoSwitchTimer;
@@ -114,10 +117,17 @@ public class ControlAssignment : MonoBehaviour
         MeshRenderer mr = controlIndicator.GetComponent<MeshRenderer>();
         if (mr != null)
         {
-            Material mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            if (mat == null)
+            Material mat = null;
+            if (highlightMaterial != null)
             {
-                mat = new Material(Shader.Find("Unlit/Color"));
+                mat = new Material(highlightMaterial);
+            }
+            else
+            {
+                Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+                if (shader == null) shader = Shader.Find("Unlit/Color");
+                if (shader == null) shader = Shader.Find("Standard");
+                mat = new Material(shader != null ? shader : Shader.Find("Hidden/InternalErrorShader"));
             }
             mat.color = new Color(0.3f, 1f, 0.3f, 0.9f); // Bright green
             mr.material = mat;

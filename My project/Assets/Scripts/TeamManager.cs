@@ -9,6 +9,9 @@ public class TeamManager : MonoBehaviour
     [SerializeField] private Color team0Color = Color.red;
     [SerializeField] private Color team1Color = new Color(0.2f, 0.3f, 1f); // Brighter blue
 
+    [Header("Visuals/Materials")]
+    [SerializeField] private Material playerMaterial;
+
     [Header("Player Sizing")]
     [SerializeField] private float playerRadius = 0.4f;
     [SerializeField] private float playerHeight = 1.2f;
@@ -118,6 +121,10 @@ public class TeamManager : MonoBehaviour
         MeshRenderer mr = visual.GetComponent<MeshRenderer>();
         if (mr != null)
         {
+            if (playerMaterial != null)
+            {
+                mr.material = new Material(playerMaterial);
+            }
             mr.material.color = teamColor;
         }
 
