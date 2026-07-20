@@ -8,10 +8,20 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        // Detect click or screen tap anywhere using the new Input System
-        if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
+        // Check for mouse click
+        var mouse = Mouse.current;
+        if (mouse != null && mouse.leftButton.wasPressedThisFrame)
         {
             LoadNextScene();
+            return;
+        }
+
+        // Check for screen touch/tap
+        var touchscreen = Touchscreen.current;
+        if (touchscreen != null && touchscreen.primaryTouch.press.wasPressedThisFrame)
+        {
+            LoadNextScene();
+            return;
         }
     }
 

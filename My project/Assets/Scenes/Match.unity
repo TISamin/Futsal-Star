@@ -451,6 +451,9 @@ MonoBehaviour:
   pitchFloor: {fileID: 685729420}
   leftGoal: {fileID: 801536160}
   rightGoal: {fileID: 783226435}
+  pitchMaterial: {fileID: 2100000, guid: 26790bcccb2f7954e959f5979f2e8d1a, type: 2}
+  goalMaterial: {fileID: 2100000, guid: 1534e84440d45674a8f342fe5cdebb04, type: 2}
+  lineMaterialAsset: {fileID: 2100000, guid: ddface3f8e365c142904b44af3614ed9, type: 2}
 --- !u!4 &187421450
 Transform:
   m_ObjectHideFlags: 0
@@ -1141,6 +1144,7 @@ MonoBehaviour:
   humanTeamId: 0
   hysteresisMargin: 1
   autoSwitchInterval: 0.5
+  highlightMaterial: {fileID: 0}
 --- !u!114 &630355974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,6 +1159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team0Color: {r: 1, g: 0, b: 0, a: 1}
   team1Color: {r: 0, g: 0, b: 1, a: 1}
+  playerMaterial: {fileID: 2100000, guid: 7addc426c0004ed42bcf7f3e50f6a0f0, type: 2}
   playerRadius: 0.4
   playerHeight: 1.2
 --- !u!4 &630355975
@@ -1305,6 +1310,7 @@ MonoBehaviour:
   humanTeamId: 0
   hysteresisMargin: 1
   autoSwitchInterval: 0.5
+  highlightMaterial: {fileID: 2100000, guid: 43b21507664cf2f4f8924b3890bc878b, type: 2}
 --- !u!4 &685415326
 Transform:
   m_ObjectHideFlags: 0
@@ -3756,6 +3762,7 @@ MonoBehaviour:
   trailStartWidth: 0.12
   trailEndWidth: 0
   trailColor: {r: 1, g: 1, b: 1, a: 0.7}
+  trailMaterial: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
